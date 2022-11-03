@@ -1,9 +1,7 @@
 package ru.netology.MovieManager;
 
-import ru.netology.MovieRepository.MovieRepo;
-
 public class MovieManager {
-    MovieRepo movieRepo = new MovieRepo();
+    private Movie[] movies = new Movie[0];
     private int lastMovieNumber;
 
     public MovieManager() {
@@ -14,10 +12,19 @@ public class MovieManager {
         this.lastMovieNumber = lastMovieNumber;
     }
 
-    public Movie[] findLast(){
-        Movie[] all = movieRepo.findAll();
+    public void addMovie(Movie movie) {
+        Movie[] temp = new Movie[movies.length + 1];
+        for (int i = 0; i < movies.length; i++) {
+            temp[i] = movies[i];
+        }
+        temp[movies.length] = movie;
+        movies = temp;
+    }
 
-        if (lastMovieNumber > all.length){
+    public Movie[] findLast() {
+        Movie[] all = findAll();
+
+        if (lastMovieNumber > all.length) {
 
             Movie[] result = new Movie[all.length];
 
@@ -36,10 +43,6 @@ public class MovieManager {
     }
 
     public Movie[] findAll() {
-        return movieRepo.findAll();
-    }
-
-    public void addMovie (Movie movie){
-        movieRepo.addMovie(movie);
+        return movies;
     }
 }
